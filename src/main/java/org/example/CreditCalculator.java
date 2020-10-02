@@ -12,15 +12,26 @@ public class CreditCalculator {
     }
 
     public double getMonthPayment(double sumCredit) {
-        return 0;
+        double x = Math.pow((1 + rate / countMonth), countMonth);
+        double K = (rate / countMonth * x) / (x - 1);
+        return sumCredit * K;
     }
 
     public double getSumOverPayment(double monthPayment) {
-        return 0;
+        double percents = sumCredit / countMonth * this.rate;
+        double sumPayment = sumCredit - monthPayment + percents;
+
+        for (int i = 0; i < countMonth - 1; i++) {
+            double payPercents = sumPayment / countMonth * rate;
+            double planPay = monthPayment - payPercents;
+            percents += payPercents;
+            sumPayment = sumPayment - planPay;
+        }
+        return percents;
     }
 
     public double fullSumInBank(double percents) {
-        return 0;
+        return sumCredit + percents;
     }
 
     public double getSumCredit() {
